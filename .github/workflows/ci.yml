@@ -1,0 +1,41 @@
+name: CI
+
+# Conventional Commits (commits and pull request titles) and every project
+# checked against the studio's schema.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  commits:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - run: npm i --no-save --no-audit --no-fund @commitlint/cli@19 @commitlint/config-conventional@19
+      - name: Commit messages
+        env:
+          FROM: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          if git cat-file -e "$FROM^{commit}" 2>/dev/null; then npx commitlint --from "$FROM" --to HEAD --verbose; else npx commitlint --last --verbose; fi
+      - name: Pull request title
+        if: github.event_name == 'pull_request'
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: echo "$TITLE" | npx commitlint --verbose
+
+  projects:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/al-writer/lyric-motion-studio/render:claude-lyric-studio-architecture-f5e9gq
+    steps:
+      - uses: actions/checkout@v5
+      - run: node /studio/tools/check.mjs --projects tracks

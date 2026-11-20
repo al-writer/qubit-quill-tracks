@@ -1,0 +1,22 @@
+name: Move media to R2
+
+# Calls the studio's media workflow: songs and footage that are not in R2 yet
+# (files in the repository or URLs) are uploaded to r2://projects/<slug>/…,
+# project.json points at them, and the change is committed.
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: Track folder under tracks/ (empty = all tracks)
+        required: false
+
+jobs:
+  migrate:
+    uses: al-writer/lyric-motion-studio/.github/workflows/media.yml@claude/lyric-studio-architecture-f5e9gq
+    with:
+      track: ${{ inputs.track }}
+      image: ghcr.io/al-writer/lyric-motion-studio/render:claude-lyric-studio-architecture-f5e9gq
+    secrets: inherit
+    permissions:
+      contents: write
+      packages: read

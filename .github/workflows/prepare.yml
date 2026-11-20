@@ -1,0 +1,40 @@
+name: Prepare tracks
+
+# Calls the studio's prepare workflow: places every word on the vocal
+# (Whisper) or takes the LRC timestamps, analyses the audio, probes the
+# media, and commits tracks/<slug>/build/. Only what a push changed is redone:
+# a colour change prepares nothing, a timing.json change only re-applies
+# the manual fixes.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tracks/*/project.json'
+      - 'tracks/*/lyrics.*'
+      - 'tracks/*/timing.json'
+  workflow_dispatch:
+    inputs:
+      tracks:
+        description: Tracks to prepare in full, space-separated
+        required: true
+      timing:
+        description: project = as in project.json · whisper = place words on the vocal · lrc = trust the LRC timestamps
+        type: choice
+        options: [project, whisper, lrc]
+        default: project
+
+concurrency:
+  group: prepare-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    uses: al-writer/lyric-motion-studio/.github/workflows/prepare.yml@claude/lyric-studio-architecture-f5e9gq
+    with:
+      tracks: ${{ inputs.tracks }}
+      timing: ${{ inputs.timing || 'project' }}
+      image: ghcr.io/al-writer/lyric-motion-studio/render:claude-lyric-studio-architecture-f5e9gq
+    secrets: inherit
+    permissions:
+      contents: write # commit build/
+      packages: read

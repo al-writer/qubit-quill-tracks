@@ -1,0 +1,10 @@
+# Proposes new studio versions (the reusable workflows' @vX.Y.Z) as pull
+# requests with Conventional Commit titles.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore(deps)

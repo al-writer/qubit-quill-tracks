@@ -1,0 +1,71 @@
+name: Render video
+
+# Calls the studio's render workflow at a fixed version: shards the render
+# over up to 20 machines per format, merges, puts the videos into a draft
+# release of this repository (and R2 / Google Drive when configured) and
+# removes every chunk afterwards.
+on:
+  workflow_dispatch:
+    inputs:
+      track:
+        description: Track folder under tracks/
+        required: true
+      formats:
+        description: Aspect ratio
+        type: choice
+        options: [wide, vertical, wide+vertical]
+        default: wide
+      res:
+        description: Resolution
+        type: choice
+        options: [4k, fhd, hd, 8k]
+        default: 4k
+      fps:
+        description: Frames per second
+        type: choice
+        options: ['60', '30']
+        default: '60'
+      quality:
+        description: master = HEVC 10-bit · compat = H.264 high bitrate · draft = fast preview
+        type: choice
+        options: [master, compat, draft]
+        default: master
+      highlight:
+        description: project = as in project.json · word = karaoke · line = whole line · wipe = fill · none
+        type: choice
+        options: [project, word, line, wipe, none]
+        default: project
+      range:
+        description: Only part of the song, in seconds, e.g. 48,92 (empty = whole song)
+        required: false
+      shards:
+        description: Machines per format (max 20 run at once on a free account)
+        default: '20'
+      release:
+        description: Put the videos into a draft release
+        type: boolean
+        default: true
+
+concurrency:
+  group: render-${{ inputs.track }}-${{ inputs.formats }}-${{ inputs.res }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    uses: al-writer/lyric-motion-studio/.github/workflows/render.yml@claude/lyric-studio-architecture-f5e9gq
+    with:
+      track: ${{ inputs.track }}
+      formats: ${{ inputs.formats }}
+      res: ${{ inputs.res }}
+      fps: ${{ inputs.fps }}
+      quality: ${{ inputs.quality }}
+      highlight: ${{ inputs.highlight }}
+      range: ${{ inputs.range }}
+      shards: ${{ inputs.shards }}
+      release: ${{ inputs.release }}
+      image: ghcr.io/al-writer/lyric-motion-studio/render:claude-lyric-studio-architecture-f5e9gq
+    secrets: inherit
+    permissions:
+      contents: write # draft release
+      actions: write # delete chunk and video artifacts once used
+      packages: read

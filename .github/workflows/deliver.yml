@@ -1,0 +1,21 @@
+name: Deliver video
+
+# Puts the videos a render run kept as artifacts into a draft release again
+# (Render does this by itself; this is for a run whose release step failed).
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: ID of a "Render video" run (the number in its URL)
+        required: true
+
+jobs:
+  deliver:
+    uses: al-writer/lyric-motion-studio/.github/workflows/deliver.yml@claude/lyric-studio-architecture-f5e9gq
+    with:
+      run_id: ${{ inputs.run_id }}
+      image: ghcr.io/al-writer/lyric-motion-studio/render:claude-lyric-studio-architecture-f5e9gq
+    permissions:
+      contents: write
+      actions: write
+      packages: read
