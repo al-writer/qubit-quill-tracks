@@ -1,0 +1,46 @@
+{
+  "$schema": "https://raw.githubusercontent.com/al-writer/lyric-motion-studio/v1.0.0/schema/project.schema.json",
+  "studio": "^1",
+  "title": "Orange Ticket Stub",
+  "artist": "Qubit Quill",
+  "language": "en",
+  "audio": "https://raw.githubusercontent.com/al-writer/lyric-motion-studio/78296983d1a7ea66bd21833e543f84ddd341495a/tracks/orange-ticket-stub/song.mp3",
+  "audioSha256": "b68dd584d009dd21003961dda806352c60df3b6e7b829689d4182705d4095734",
+  "lyrics": {
+    "file": "lyrics.txt",
+    "timing": "whisper",
+    "emphasis": [
+      "^orange ticket stub$"
+    ],
+    "pop": [
+      "^hold me up"
+    ],
+    "italicSections": [
+      "bridge"
+    ]
+  },
+  "colors": {
+    "text": "#f7ead9",
+    "accent": "#ff8a2a",
+    "accentSoft": "#ffb470"
+  },
+  "template": "illustrated",
+  "scene": {
+    "hero": {
+      "component": "Ticket.jsx"
+    }
+  },
+  "thumbnails": {
+    "tag": "Lyric video",
+    "line": "I keep the little things",
+    "highlight": "little"
+  },
+  "promo": {
+    "hook": "POV: you still keep their ticket stub",
+    "highlight": [
+      "ticket",
+      "stub"
+    ],
+    "badge": "New song · out now"
+  }
+}
