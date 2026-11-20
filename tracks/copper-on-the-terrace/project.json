@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/al-writer/lyric-motion-studio/v1.0.0/schema/project.schema.json",
+  "studio": "^1",
+  "title": "Copper on the Terrace",
+  "artist": "Qubit Quill",
+  "language": "en",
+  "audio": "https://raw.githubusercontent.com/al-writer/lyric-motion-studio/4212285c133105119257bf1bebf56b07eec7dcf4/tracks/copper-on-the-terrace/song.mp3",
+  "audioSha256": "d147d73e2bb225448a89fa215be8f19891f2e5034f4e41043cea37a9b281df06",
+  "lyrics": {
+    "file": "lyrics.lrc",
+    "timing": "whisper"
+  },
+  "fonts": {
+    "body": "Fraunces Variable",
+    "display": "Anton",
+    "hand": "Caveat"
+  },
+  "colors": {
+    "text": "#2b1a12",
+    "accent": "#c4572a",
+    "accentSoft": "#f2913f"
+  },
+  "template": "custom",
+  "scene": {
+    "component": "Poster.jsx",
+    "fade": {
+      "in": 0.8,
+      "out": 4
+    }
+  },
+  "thumbnails": {
+    "component": "Covers.jsx",
+    "variants": {
+      "title": {
+        "skin": "verse",
+        "line": "Copper on the Terrace",
+        "note": "a rooftop goodbye"
+      },
+      "rust": {
+        "skin": "chorus",
+        "line": "Gold turning to rust",
+        "note": "Copper on the Terrace"
+      },
+      "pov": {
+        "skin": "pre",
+        "line": "POV: the summer ends before the party does",
+        "note": "Copper on the Terrace"
+      },
+      "dust": {
+        "skin": "chorus",
+        "line": "Velvet Dust",
+        "note": "Copper on the Terrace"
+      },
+      "souvenir": {
+        "skin": "outro",
+        "line": "Just a souvenir",
+        "note": "Copper on the Terrace"
+      },
+      "brightest": {
+        "skin": "bridge",
+        "line": "The brightest hour of a dying year",
+        "note": "Copper on the Terrace"
+      },
+      "tradewinds": {
+        "skin": "verse",
+        "line": "Before the trade winds fail",
+        "note": "Copper on the Terrace"
+      }
+    }
+  }
+}
