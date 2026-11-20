@@ -1,7 +1,7 @@
 name: Trial (temporary)
 
 # Temporary: tries the studio branch end to end before v1.0.0 exists.
-# Removed once the trial has passed.
+# Removed once the trial has passed. (run 2: steps in bash)
 on:
   push:
     branches: [claude/lyric-studio-architecture-f5e9gq]
